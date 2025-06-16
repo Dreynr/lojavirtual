@@ -12,6 +12,7 @@ class LojaController extends Controller
     {
         $types = Type::orderBy('name', 'asc')->get();
         
+        //-------------
         $query = Product::with('type')
                         ->where('quantity', '>', 0)
                         ->orderBy('name', 'asc');
@@ -22,6 +23,7 @@ class LojaController extends Controller
         }
         
         $products = $query->get();
+        //-----------
         
         return view('loja.index', [
             'products' => $products,

@@ -33,7 +33,7 @@
                 <table class="w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="border-b border-white">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 bu:text-gray-300 uppercase tracking-wider">
                                 Nome/Razão Social</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                 Tipo</th>
@@ -54,10 +54,12 @@
                                     <a href="{{ url('/fornecedores/update', ['id' => $fornecedor->id]) }}">
                                         <x-primary-button class="bg-indigo-600 hover:bg-indigo-700">Editar</x-primary-button>
                                     </a>
+                                    <!------->
                                     <a href="{{ url('/fornecedores/delete', ['id' => $fornecedor->id]) }}" 
                                        onclick="return confirm('Tem certeza que deseja excluir este fornecedor?')">
                                         <x-danger-button>Excluir</x-danger-button>
                                     </a>
+                                    <!------->
                                 </td>
                             </tr>
                         @endforeach

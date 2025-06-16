@@ -7,8 +7,9 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TypesController;
 use Illuminate\Support\Facades\Route;
 
-// Rota pública da loja (página inicial)
+// -----------
 Route::get('/', [LojaController::class, 'index'])->name('loja');
+// -----------
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -19,7 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    // Produtos
     Route::get('/products/new', [ProductsController::class, 'create']);
     Route::post('/products/new', [ProductsController::class, 'store']);
     Route::get('/products', [ProductsController::class, 'index'])->name('products');
@@ -27,7 +27,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/products/update/', [ProductsController::class, 'update']);
     Route::get('/products/delete/{id}', [ProductsController::class, 'destroy']);
 
-    // Types
     Route::get('/types/new', [TypesController::class, 'create']);
     Route::post('/types/new', [TypesController::class, 'store']);
     Route::get('/types', [TypesController::class, 'index'])->name('types');
@@ -35,7 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/types/update/', [TypesController::class, 'update']);
     Route::get('/types/delete/{id}', [TypesController::class, 'destroy']);
 
-    // Fornecedores
     Route::get('/fornecedores/new', [FornecedorController::class, 'create']);
     Route::post('/fornecedores/new', [FornecedorController::class, 'store']);
     Route::get('/fornecedores', [FornecedorController::class, 'index'])->name('fornecedores');

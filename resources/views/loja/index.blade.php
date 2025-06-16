@@ -6,46 +6,44 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Camisaria Gaúcha - Camisas dos Times do RS</title>
     
-    <!-- Fonts -->
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     
-    <!-- Scripts -->
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased bg-gray-50">
-    <!-- HEADER -->
     <header class="bg-white shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <!-- Logo -->
                 <div class="flex items-center">
                     <div class="flex-shrink-0 flex items-center">
                         <h1 class="text-2xl font-bold text-gray-900">⚽ Camisaria Gaúcha</h1>
                     </div>
                 </div>
 
-                <!-- Auth Links -->
                 <div class="flex items-center space-x-4">
                     @auth
                         <a href="{{ route('dashboard') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
                     @else
+                        <!---------------------->
                         <a href="{{ route('login') }}" class="text-gray-700 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium">Login</a>
                         <a href="{{ route('register') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium">Register</a>
+                        <!---------------------->
                     @endauth
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
+
     <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <!-- Título -->
         <div class="px-4 py-6 sm:px-0">
             <h1 class="text-3xl font-bold text-gray-900 text-center mb-8">Camisas dos Times Gaúchos</h1>
         </div>
 
-        <!-- Filtros -->
+
         <div class="bg-white rounded-lg shadow p-6 mb-8">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Filtrar por Time:</h3>
             <div class="flex flex-wrap gap-3">
@@ -62,35 +60,43 @@
             </div>
         </div>
 
-        <!-- Grid de Produtos -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+
+        <div class="flex flex-wrap gap-4 justify-center">
             @forelse($products as $product)
-                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                    <!-- Imagem do produto (placeholder) -->
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-red-500 flex items-center justify-center">
-                        <span class="text-white text-4xl">👕</span>
+                <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 w-48 flex-shrink-0">
+
+                    <div class="h-48 bg-gray-100 overflow-hidden">
+                        @if($product->image && file_exists(public_path('images/products/' . $product->image)))
+                            <img src="{{ asset('images/products/' . $product->image) }}" 
+                                 alt="{{ $product->name }}" 
+                                 class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        @else
+                            <div class="bg-gradient-to-br from-blue-500 to-red-500 w-full h-full flex items-center justify-center">
+                                <span class="text-white text-3xl">👕</span>
+                            </div>
+                        @endif
                     </div>
                     
-                    <!-- Informações do produto -->
-                    <div class="p-4">
-                        <div class="flex items-center justify-between mb-2">
+
+                    <div class="p-3">
+                        <div class="mb-1">
                             <span class="text-xs font-medium text-blue-600 uppercase tracking-wide">{{ $product->type->name }}</span>
                         </div>
                         
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $product->name }}</h3>
+                        <h3 class="text-sm font-semibold text-gray-900 mb-2">{{ $product->name }}</h3>
                         
                         @if($product->description)
-                            <p class="text-gray-600 text-sm mb-3">{{ Str::limit($product->description, 60) }}</p>
+                            <p class="text-gray-600 text-xs mb-2">{{ Str::limit($product->description, 40) }}</p>
                         @endif
                         
-                        <div class="flex items-center justify-between">
-                            <span class="text-2xl font-bold text-green-600">R$ {{ number_format($product->price, 2, ',', '.') }}</span>
-                            <span class="text-sm text-gray-500">{{ $product->quantity }} disponíveis</span>
+                        <div class="space-y-1">
+                            <div class="text-lg font-bold text-green-600">R$ {{ number_format($product->price, 2, ',', '.') }}</div>
+                            <div class="text-xs text-gray-500">{{ $product->quantity }} em estoque</div>
                         </div>
                     </div>
                 </div>
             @empty
-                <div class="col-span-full text-center py-12">
+                <div class="text-center py-12">
                     <div class="text-gray-500">
                         <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2 2v-5m16 0h-2M4 13h2m13-8V4a1 1 0 00-1-1H7a1 1 0 00-1 1v1m12 0H8" />
@@ -103,7 +109,7 @@
         </div>
     </main>
 
-    <!-- FOOTER -->
+
     <footer class="bg-gray-800 mt-12">
         <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
             <p class="text-center text-gray-300 text-sm">

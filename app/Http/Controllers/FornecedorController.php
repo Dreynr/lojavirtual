@@ -22,14 +22,14 @@ class FornecedorController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   //---------------------
         $request->validate([
             'tipo' => 'required|in:F,J',
             'nome_razao' => 'required|min:2|max:100',
             'cpf_cnpj' => 'required|min:11|max:20|unique:fornecedores,cpf_cnpj',
             'telefone' => 'nullable|max:20',
         ]);
-
+        //---------------------
         Fornecedor::create([
             'tipo' => $request->tipo,
             'nome_razao' => $request->nome_razao,
